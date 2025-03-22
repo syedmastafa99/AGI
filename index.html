@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Python Editor</title>
+    <style>
+        textarea { width: 80%; height: 300px; }
+        #output { border: 1px solid #ccc; padding: 10px; margin-top: 10px; width: 80%; white-space: pre-wrap;}
+        #fileList { border: 1px solid #ccc; padding: 10px; margin-top: 10px; width: 20%; float:left;}
+        #editor {float:right; width: 75%;}
+    </style>
+</head>
+<body>
+    <div id="fileList">
+      <h2>Files:</h2>
+      <ul id="files">
+        {% for file in files %}
+          <li><a href="#" onclick="loadFile('{{ file }}')">{{ file }}</a></li>
+        {% endfor %}
+      </ul>
+      <input type="text" id="filename" placeholder="filename.py">
+      <button onclick="saveFile()">Save</button>
+    </div>
+
+    <div id="editor">
+      <textarea id="code"></textarea><br>
+      <button onclick="runCode()">Run</button>
+      <button onclick="clearCode()">Clear</button>
+      <div id="output"></div>
+    </div>
+
+    <script>
+        function runCode() {
+            const code = document.getElementById('code').value;
+            fetch('/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `code=${encodeURIComponent(code)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').textContent = data.output;
+                if(data.error){
+                    document.getElementById('output').style.color = "red"
+                } else {
+                    document.getElementById('output').style.color = "black"
+                }
+            });
+        }
+
+        function saveFile() {
+            const code = document.getElementById('code').value;
+            const filename = document.getElementById('filename').value;
+            fetch('/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `code=${encodeURIComponent(code)}&filename=${encodeURIComponent(filename)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Reload to update file list
+                } else {
+                    alert('Error saving file: ' + data.error);
+                }
+            });
+        }
+
+        function loadFile(filename) {
+            fetch('/load', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `filename=${encodeURIComponent(filename)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code) {
+                    document.getElementById('code').value = data.code;
+                } else {
+                    alert('Error loading file: ' + data.error);
+                }
+            });
+        }
+
+        function clearCode() {
+            document.getElementById('code').value = '';
+            document.getElementById('output').textContent = '';
+        }
+    </script>
+</body>
+</html>
