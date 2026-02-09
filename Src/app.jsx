@@ -79,7 +79,7 @@ const App = () => {
   const iframeRef = useRef(null);
   
   // এআই এপিআই কি (রানটাইমে ইনজেক্ট হবে)
-  const apiKey = ""; 
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY; 
 
   // --- অথেনটিকেশন লজিক (Rule 3) ---
   useEffect(() => {
