@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SoloForge Pro | AI Universal Builder</title>
+    
+    <!-- 
+      PHILOSOPHY: Anondito Bortoman
+      "ভবিষ্যতের চিন্তায় বর্তমানকে হারিয়ে ফেলবেন না। প্রতিটি লাইনের কোড এবং প্রতিটি সৃজনশীল মুহূর্ত—সেটিই আপনার প্রকৃত আনন্দ।" 
+    -->
+
+    <!-- Google Fonts for Professional UI and Bengali Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Hind+Siliguri:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Hind Siliguri', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+          }
+        }
+      }
+    </script>
+    
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #020617; /* Slate 950 - Professional Dark Theme */
+        -webkit-tap-highlight-color: transparent;
+        color: white;
+      }
+      #root {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+      }
+      /* Custom loader animation for the main page entry */
+      .initial-loader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Inter', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 10px;
+        color: #6366f1;
+        font-weight: 900;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="initial-loader">SoloForge System Loading...</div>
+    </div>
+    
+    <!-- Entry point for the React application -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
